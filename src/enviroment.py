@@ -1,13 +1,14 @@
 import random
 
 class Environment:
-    def __init__(self):
-        self.food = 50
+    def __init__(self, food_regen_rate=12, initial_food=50):
+        self.food = initial_food
         self.temperature = 20
+        self.food_regen_rate = food_regen_rate
 
     def regenerate_food(self):
         max_food = 100
-        self.food += 12
+        self.food += self.food_regen_rate
         if self.food > max_food:
             self.food = max_food
         if self.food < 0:

@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 from src.simulation import Simulation
 
 def main():
-    sim = Simulation(initial_population=10)
+    sim = Simulation(initial_population=10, attack_probability=0.02, food_regeneration_rate=12)
     sim.run(steps=100)
 
     plt.figure()

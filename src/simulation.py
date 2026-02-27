@@ -4,10 +4,10 @@ from src.enviroment import Environment
 from src.data_collector import DataCollection
 
 class Simulation:
-    def __init__(self, initial_population = 10):
+    def __init__(self, initial_population = 10, attack_probability=0.02, food_regeneration_rate=12,):
         self.frogs = [Frog() for _ in range(initial_population)]
-        self.predator = Predator()
-        self.environment = Environment()
+        self.predator = Predator(attack_probability=attack_probability)
+        self.environment = Environment(food_regen_rate=food_regeneration_rate)
         self.data = DataCollection()
         self.time = 0
 
@@ -46,5 +46,3 @@ class Simulation:
     def run(self, steps=50):
         for _ in range(steps):
             self.step()
-
-    
