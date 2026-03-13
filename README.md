@@ -11,19 +11,19 @@ Kennesaw State University
 Mikkel Welch
 
 ## Status
-Milestone 2 – Initial Implementation
-Milestone 3 - In progress
+- Milestone 2 – Initial Implementation  
+- Milestone 3 - In progress
 
 ## Requirements
-Python Version: Python 3.10+
-Install dependencies:
+Python Version: Python 3.10+  
+Install dependencies:  
    pip install -r requirements.txt
 
 ## How to Run
-1. Install dependencies:
+1. Install dependencies:  
    pip install -r requirements.txt
    
-2. Run the simulation:
+2. Run the simulation:  
    python main.py
 
 The simulation will execute a full run and generate several graphs showing ecosystem behavior over time. 
@@ -42,7 +42,7 @@ The simulation collects the following time-series data:
 * Births per step
 * Deaths per step
 * Predator kills per step
-* Food levels
+* Food levels  
 These metrics are used to analyze ecosystem stability and population dynamics
 
 ## Models Implemented
@@ -68,26 +68,26 @@ Food availabilty directly influences reproduction rates and survival, making it 
 ## Architecture Overview 
 The simulation is organized using modular components located in the src/ directory.
 
-**src/frog.py**
+**src/frog.py**  
 Defines the Frog entity including lifecycle behavior, energy management, reproduction rules, and mortality conditions.
 
-**src/predator.py**
+**src/predator.py**  
 Implements predator behavior and probabilistic attack mechanics.
 
-**src/enviroment.py**
+**src/enviroment.py**  
 Manages enviromental conditions including food regeneration and temperature variations.
 
-**src/data_collectior.py**
+**src/data_collectior.py**  
 Handles automated data collection for simulation metrics such as population size, births, deaths, food levels, predator kills.
 
-**src/simulation.py**
+**src/simulation.py**  
 Coordinates the simulation data collection for simulation metrics such as population size, births, deaths, food levels, and predator kills.
 
-**main.py**
+**main.py**  
 Entry point that runs the simulation and generates visualization graphs using matplotlib.
 
 ## Project Structure
-
+```
 frog-ecosystem-simulation
 │
 ├── src
@@ -101,8 +101,8 @@ frog-ecosystem-simulation
 ├── main.py
 ├── README.md
 └── requirements.txt
-
+```
 
 ## Repository
-Github Repository:
+Github Repository:  
 https://github.com/MikkelWel/frog-ecosystem-simulation
