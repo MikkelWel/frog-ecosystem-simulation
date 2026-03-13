@@ -17,7 +17,7 @@ Mikkel Welch
 ## Requirements
 Python Version: Python 3.10+  
 Install dependencies:  
-   pip install -r requirements.txt
+- pip install -r requirements.txt
 
 ## How to Run
 1. Install dependencies:  
@@ -42,7 +42,8 @@ The simulation collects the following time-series data:
 * Births per step
 * Deaths per step
 * Predator kills per step
-* Food levels  
+* Food levels
+
 These metrics are used to analyze ecosystem stability and population dynamics
 
 ## Models Implemented
