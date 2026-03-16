@@ -54,3 +54,4 @@ class Frog:
             self.energy -= 1
 
         self.maybe_die()
+        
