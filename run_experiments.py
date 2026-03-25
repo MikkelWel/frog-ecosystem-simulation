@@ -1,5 +1,6 @@
 from src.simulation import Simulation
 import time
+import json
 
 runs = [
     {"id": "001", "population": 50, "attack": 0.2, "food": 12},
@@ -30,6 +31,11 @@ for run in runs:
     duration = time.time() - start
 
     filename = f"run_{run['id']}.csv"
-    sim.data.export_csv(filename)
+    sim.data.export_to_csv(filename)
+
+    config_filename = f"run_{run['id']}_config.json"
+
+    with open(config_filename, "w") as f:
+        json.dump(run, f, indent=4)
 
     print(f"Run {run['id']} complete in {round(duration, 2)}s → {filename}")
