@@ -4,7 +4,7 @@ from src.enviroment import Environment
 from src.data_collector import DataCollection
 
 class Simulation:
-    def __init__(self, initial_population = 10, attack_probability=0.02, food_regeneration_rate=12):
+    def __init__(self, initial_population=10, attack_probability=0.02, food_regeneration_rate=12):
         self.frogs = [Frog() for _ in range(initial_population)]
         self.predator = Predator(attack_probability=attack_probability)
         self.environment = Environment(food_regen_rate=food_regeneration_rate)
@@ -32,10 +32,16 @@ class Simulation:
                 if baby:
                     new_frogs.append(baby)
                     self.data.births += 1
-                
+
                 if not frog.alive:
                     self.data.deaths += 1
-            
+
+        if self.environment.food < 0:
+            self.environment.food = 0
+
+        if len(self.frogs) < 0:
+            self.frogs = []
+
         self.frogs = [frog for frog in self.frogs if frog.alive]
         self.frogs.extend(new_frogs)
 
