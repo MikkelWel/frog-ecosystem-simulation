@@ -1,6 +1,6 @@
 from src.frog import Frog
 from src.predator import Predator
-from src.enviroment import Environment
+from src.environment import Environment
 from src.data_collector import DataCollection
 
 class Simulation:
