@@ -53,8 +53,6 @@ def main():
     sim = Simulation(initial_population=config["initial_population"], attack_probability=config["attack_probability"], food_regeneration_rate=config["food_regeneration_rate"])
     sim.run(steps=config["steps"])
 
-    sim.data.export_to_csv("run_001.csv")
-
     FrogPopulationSimulation()
     BirthsPerStep()
     DeathsPerStep()
