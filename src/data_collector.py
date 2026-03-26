@@ -70,9 +70,16 @@ class DataCollection:
                     round(self.avg_energy_history[i], 2),
                     round(self.growth_rate_history[i], 2)
                 ])
+    
 
     def summary(self):
+        final_population = (
+            self.population_history[-1]
+            if self.population_history else 0
+        )
+
         return {
+            "final_population": final_population,
             "max_population": max(self.population_history) if self.population_history else 0,
             "min_population": min(self.population_history) if self.population_history else 0,
             "total_births": sum(self.birth_history),
@@ -81,5 +88,6 @@ class DataCollection:
             "total_steps": len(self.step_history),
             "avg_population": round(sum(self.population_history) / len(self.population_history) if self.population_history else 0, 4),
             "avg_energy": round(sum(self.avg_energy_history) / len(self.avg_energy_history) if self.avg_energy_history else 0, 4),
-            "growth_rate": round(sum(self.growth_rate_history) / len(self.growth_rate_history) if self.growth_rate_history else 0, 4)
+            "growth_rate": round(sum(self.growth_rate_history) / len(self.growth_rate_history) if self.growth_rate_history else 0, 4),
+            "final_growth_rate": round(self.growth_rate_history[-1] if self.growth_rate_history else 0, 4)
         }

@@ -40,8 +40,9 @@ def generate_summary():
             summary["total_steps"],
             summary["avg_population"],
             summary["avg_energy"],
-            summary["growth_rate"]
-    ])
+            summary["growth_rate"],
+            summary.get("final_growth_rate", 0)
+        ])
 
     with open(output_file, "w", newline="") as f:
         writer = csv.writer(f)
@@ -59,8 +60,9 @@ def generate_summary():
             "Total Steps",
             "Avg Pop",
             "Avg Energy",
-            "Growth Rate"
-    ])
+            "Growth Rate",
+            "final_growth_rate"
+        ])
         writer.writerows(rows)
 
     print(f"Summary table saved to {output_file}")

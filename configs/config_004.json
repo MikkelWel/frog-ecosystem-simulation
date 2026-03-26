@@ -1,7 +1,7 @@
 {
   "id": "004",
   "initial_population": 150,
-  "attack_probability": 0.3,
+  "attack_probability": 0.03,
   "food_regeneration_rate": 12,
   "steps": 200,
   "seed": 45

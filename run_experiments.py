@@ -110,7 +110,8 @@ def main():
 
         print(f"Run {config['id']} complete in {round(duration,4)}s → {run_folder}")
 
-generate_summary()
+
 
 if __name__ == "__main__":
     main()
+    generate_summary()
