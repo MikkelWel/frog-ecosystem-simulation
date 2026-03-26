@@ -90,6 +90,8 @@ The simulation includes a comprehensive data collection system:
 ```
 runs/
 ├── index.csv
+├── summary_table.csv
+├── summary_table.png
 ├── run_001/
 │   ├── timeseries.csv
 │   ├── events.csv
@@ -134,6 +136,7 @@ frog-ecosystem-simulation/
 ├── src
 │   ├── data_collector.py
 │   ├── environment.py
+│   ├── event_logger.py
 │   ├── frog.py
 │   ├── predator.py
 │   └── simulation.py
@@ -141,6 +144,7 @@ frog-ecosystem-simulation/
 ├── configs/
 ├── runs/
 ├── .gitignore
+├── generate_summary_csv.py
 ├── main.py
 ├── README.md
 ├── requirements.txt
