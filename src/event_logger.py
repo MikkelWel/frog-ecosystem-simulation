@@ -8,6 +8,7 @@ class EventLogger:
 
     def log(self, step, event_type, details):
         self.writer.writerow([step, event_type, details])
+        self.file.flush()
 
     def close(self):
         self.file.close()
