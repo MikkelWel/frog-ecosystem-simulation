@@ -1,7 +1,28 @@
+import json
+import os
+import random
 import matplotlib.pyplot as plt
 from src.simulation import Simulation
 
-def FrogPopulationSimulation():
+CONFIG_FOLDER = "configs"
+OUTPUT_BASE = "runs"
+
+def load_config(config_path):
+    with open(config_path) as f:
+        return json.load(f)
+
+def save_outputs(sim, run_folder, config):
+    os.makedirs(run_folder, exist_ok=True)
+
+    sim.data.export_to_csv(os.path.join(run_folder, "timeseries.csv"))
+
+    with open(os.path.join(run_folder, "summary.json"), "w") as f:
+        json.dump(sim.data.summary(), f, indent=4)
+
+    with open(os.path.join(run_folder, "config.json"), "w") as f:
+        json.dump(config, f, indent=4)
+
+def plot_metrics(sim):
     plt.figure()
     plt.plot(sim.data.population_history)
     plt.title("Frog Population Over Time")
@@ -9,7 +30,6 @@ def FrogPopulationSimulation():
     plt.ylabel("Population")
     plt.show()
 
-def BirthsPerStep():
     plt.figure()
     plt.plot(sim.data.birth_history)
     plt.title("Births Per Step")
@@ -17,7 +37,6 @@ def BirthsPerStep():
     plt.ylabel("Births")
     plt.show()
 
-def DeathsPerStep():
     plt.figure()
     plt.plot(sim.data.death_history)
     plt.title("Deaths Per Step")
@@ -25,7 +44,6 @@ def DeathsPerStep():
     plt.ylabel("Deaths")
     plt.show()
 
-def FoodLevelOverTime():
     plt.figure()
     plt.plot(sim.data.food_history)
     plt.title("Food Level Over Time")
@@ -33,7 +51,6 @@ def FoodLevelOverTime():
     plt.ylabel("Food Level")
     plt.show()
 
-def PredatorKillsPerStep():
     plt.figure()
     plt.plot(sim.data.predator_kill_history)
     plt.title("Predator Kills Per Step")
@@ -42,24 +59,30 @@ def PredatorKillsPerStep():
     plt.show()
 
 def main():
+    for config_file in sorted(os.listdir(CONFIG_FOLDER)):
+        if not config_file.endswith(".json"):
+            continue
 
-    config = {
-        "initial_population": 10,
-        "attack_probability": 0.02,
-        "food_regeneration_rate": 12,
-        "steps": 100
-    }
-    global sim
-    sim = Simulation(initial_population=config["initial_population"], attack_probability=config["attack_probability"], food_regeneration_rate=config["food_regeneration_rate"])
-    sim.run(steps=config["steps"])
+        config_path = os.path.join(CONFIG_FOLDER, config_file)
+        config = load_config(config_path)
 
-    FrogPopulationSimulation()
-    BirthsPerStep()
-    DeathsPerStep()
-    FoodLevelOverTime()
-    PredatorKillsPerStep()
+        print(f"Running simulation {config['id']}...")
 
+        random.seed(config.get("seed", None))
 
+        sim = Simulation(
+            initial_population=config["initial_population"],
+            attack_probability=config["attack_probability"],
+            food_regeneration_rate=config["food_regeneration_rate"]
+        )
+
+        sim.run(steps=config["steps"])
+
+        run_folder = os.path.join(OUTPUT_BASE, f"run_{config['id']}")
+        save_outputs(sim, run_folder, config)
+
+        plot_metrics(sim)
+        print(f"Run {config['id']} complete. Outputs saved in {run_folder}")
 
 if __name__ == "__main__":
     main()

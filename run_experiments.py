@@ -1,41 +1,42 @@
-from src.simulation import Simulation
-import time
 import json
+from src.simulation import Simulation
+import os
+import time
+import random
 
-runs = [
-    {"id": "001", "population": 50, "attack": 0.2, "food": 12},
-    {"id": "002", "population": 100, "attack": 0.2, "food": 12},
-    {"id": "003", "population": 50, "attack": 0.4, "food": 12},
-    {"id": "004", "population": 150, "attack": 0.3, "food": 12},
-    {"id": "005", "population": 80, "attack": 0.25, "food": 10},
-    {"id": "006", "population": 120, "attack": 0.35, "food": 15},
-    {"id": "007", "population": 60, "attack": 0.3, "food": 8},
-    {"id": "008", "population": 90, "attack": 0.4, "food": 14},
-    {"id": "009", "population": 110, "attack": 0.2, "food": 10},
-    {"id": "010", "population": 70, "attack": 0.3, "food": 12},
-    {"id": "011", "population": 140, "attack": 0.25, "food": 15},
-    {"id": "012", "population": 100, "attack": 0.35, "food": 10}
-]
+config_folder = "configs"
+output_folder = "runs"
+os.makedirs(output_folder, exist_ok=True)
 
-for run in runs:
-    start = time.time()
+for config_file in sorted(os.listdir(config_folder)):
+    if not config_file.endswith(".json"):
+        continue
+
+    with open(os.path.join(config_folder, config_file)) as f:
+        config = json.load(f)
+
+    print(f"Running simulation {config['id']}...")
+
+    random.seed(config.get("seed", None))
 
     sim = Simulation(
-        initial_population=run["population"],
-        attack_probability=run["attack"],
-        food_regeneration_rate=run["food"]
+        initial_population=config["initial_population"],
+        attack_probability=config["attack_probability"],
+        food_regeneration_rate=config["food_regeneration_rate"]
     )
 
-    sim.run(steps=200)
-
+    start = time.time()
+    sim.run(steps=config["steps"])
     duration = time.time() - start
 
-    filename = f"run_{run['id']}.csv"
-    sim.data.export_to_csv(filename)
+    run_folder = os.path.join(output_folder, f"run_{config['id']}")
+    os.makedirs(run_folder, exist_ok=True)
 
-    config_filename = f"run_{run['id']}_config.json"
+    sim.data.export_to_csv(os.path.join(run_folder, "timeseries.csv"))
+    with open(os.path.join(run_folder, "summary.json"), "w") as f:
+        json.dump(sim.data.summary(), f, indent=4)
 
-    with open(config_filename, "w") as f:
-        json.dump(run, f, indent=4)
+    with open(os.path.join(run_folder, "config.json"), "w") as f:
+        json.dump(config, f, indent=4)
 
-    print(f"Run {run['id']} complete in {round(duration, 2)}s → {filename}")
+    print(f"Run {config['id']} complete in {round(duration,2)}s → {run_folder}")
