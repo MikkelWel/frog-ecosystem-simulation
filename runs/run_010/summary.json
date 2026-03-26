@@ -1,6 +1,7 @@
 {
     "max_population": 70,
     "min_population": 0,
+    "avg_population": 2.59,
     "total_births": 16,
     "total_deaths": 86,
     "total_predator_kills": 85,

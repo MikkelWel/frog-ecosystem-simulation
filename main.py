@@ -91,12 +91,14 @@ def main():
             food_regeneration_rate=config["food_regeneration_rate"]
         )
 
+        run_folder = os.path.join(OUTPUT_BASE, f"run_{config['id']}")
+        os.makedirs(run_folder, exist_ok=True)
+
         event_logger = EventLogger(os.path.join(run_folder, "events.csv"))
 
         sim.run(steps=config["steps"], event_logger=event_logger)
         event_logger.close()
 
-        run_folder = os.path.join(OUTPUT_BASE, f"run_{config['id']}")
         save_outputs(sim, run_folder, config)
 
         # plot_metrics(sim)
