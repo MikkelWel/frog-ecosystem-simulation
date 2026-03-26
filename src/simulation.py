@@ -37,10 +37,8 @@ class Simulation:
                     self.data.deaths += 1
 
         if self.environment.food < 0:
+            print("Warning: food dropped below 0")
             self.environment.food = 0
-
-        if len(self.frogs) < 0:
-            self.frogs = []
 
         self.frogs = [frog for frog in self.frogs if frog.alive]
         self.frogs.extend(new_frogs)
