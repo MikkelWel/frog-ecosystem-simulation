@@ -3,5 +3,6 @@
     "min_population": 0,
     "total_births": 13,
     "total_deaths": 73,
-    "total_predator_kills": 72
+    "total_predator_kills": 72,
+    "total_steps": 200
 }

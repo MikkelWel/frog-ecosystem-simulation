@@ -1,5 +1,4 @@
 import csv
-import time
 from datetime import datetime
 
 class DataCollection:
@@ -53,5 +52,6 @@ class DataCollection:
             "min_population": min(self.population_history) if self.population_history else 0,
             "total_births": sum(self.birth_history),
             "total_deaths": sum(self.death_history),
-            "total_predator_kills": sum(self.predator_kill_history)
+            "total_predator_kills": sum(self.predator_kill_history),
+            "total_steps": len(self.step_history)
         }

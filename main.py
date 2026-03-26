@@ -81,7 +81,7 @@ def main():
         run_folder = os.path.join(OUTPUT_BASE, f"run_{config['id']}")
         save_outputs(sim, run_folder, config)
 
-        plot_metrics(sim)
+        # plot_metrics(sim)
         print(f"Run {config['id']} complete. Outputs saved in {run_folder}")
 
 if __name__ == "__main__":
