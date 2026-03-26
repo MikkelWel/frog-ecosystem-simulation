@@ -24,7 +24,7 @@ Install dependencies:
    pip install -r requirements.txt
    
 2. Run the simulation:  
-   python run_experiments.py
+   python main.py
 
 The simulation will execute a full run and generate several graphs showing ecosystem behavior over time. 
 
@@ -98,8 +98,6 @@ frog-ecosystem-simulation
 │   ├── predator.py
 │   └── simulation.py
 │
-├── configs/
-├── runs/
 ├── .gitignore
 ├── main.py
 ├── README.md
