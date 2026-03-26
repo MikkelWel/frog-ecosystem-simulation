@@ -10,6 +10,7 @@ class Simulation:
         self.environment = Environment(food_regen_rate=food_regeneration_rate)
         self.data = DataCollection()
         self.time = 0
+        self.event_logger = None
 
     def step(self):
         new_frogs = []
@@ -25,6 +26,8 @@ class Simulation:
                 killed = self.predator.attempt_attack(frog)
                 if killed:
                     self.data.predator_kills += 1
+                    if self.event_logger:
+                        self.event_logger.log(self.time, "predator_kill", "frog eaten")
 
                 frog.step(self.environment.temperature)
 
@@ -32,9 +35,13 @@ class Simulation:
                 if baby:
                     new_frogs.append(baby)
                     self.data.births += 1
+                    if self.event_logger:
+                        self.event_logger.log(self.time, "birth", "new frog")
 
                 if not frog.alive:
                     self.data.deaths += 1
+                    if self.event_logger:
+                        self.event_logger.log(self.time, "death", "frog died")
 
         if self.environment.food < 0:
             print("Warning: food dropped below 0")
@@ -47,6 +54,7 @@ class Simulation:
 
         self.time += 1
 
-    def run(self, steps=50):
+    def run(self, steps=50, event_logger=None):
+        self.event_logger = event_logger
         for _ in range(steps):
             self.step()

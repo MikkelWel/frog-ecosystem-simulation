@@ -3,6 +3,7 @@ import os
 import random
 import matplotlib.pyplot as plt
 from src.simulation import Simulation
+from src.event_logger import EventLogger
 
 CONFIG_FOLDER = "configs"
 OUTPUT_BASE = "runs"
@@ -90,7 +91,10 @@ def main():
             food_regeneration_rate=config["food_regeneration_rate"]
         )
 
-        sim.run(steps=config["steps"])
+        event_logger = EventLogger(os.path.join(run_folder, "events.csv"))
+
+        sim.run(steps=config["steps"], event_logger=event_logger)
+        event_logger.close()
 
         run_folder = os.path.join(OUTPUT_BASE, f"run_{config['id']}")
         save_outputs(sim, run_folder, config)
