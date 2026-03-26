@@ -1,0 +1,7 @@
+{
+    "max_population": 110,
+    "min_population": 0,
+    "total_births": 20,
+    "total_deaths": 130,
+    "total_predator_kills": 130
+}
