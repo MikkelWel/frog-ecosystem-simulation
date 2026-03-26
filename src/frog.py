@@ -19,9 +19,9 @@ class Frog:
             return None
         
         #only allow reproduction in "spring"
-        if 5 <= (current_time % 40) <= 12:
+        if 5 <= (current_time % 40) <= 16:
             if self.energy >= 18:
-                reproduction_chance = 0.1 + 0.01 * (self.energy - 18)
+                reproduction_chance = 0.15 + 0.01 * (self.energy - 18)
                 if random.random() < reproduction_chance:
                     self.energy -= 6
                     return Frog()
@@ -47,11 +47,11 @@ class Frog:
             self.stage = "adult"
 
         if temperature < 10:
-            self.energy -= 2
-        elif temperature > 30:
-            self.energy -= 2
-        else:
             self.energy -= 1
+        elif temperature > 30:
+            self.energy -= 1
+        else:
+            self.energy -= .5
 
         self.maybe_die()
         

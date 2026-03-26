@@ -1,13 +1,13 @@
 {
-    "final_population": 22,
-    "max_population": 175,
-    "min_population": 18,
-    "total_births": 580,
-    "total_deaths": 608,
-    "total_predator_kills": 85,
+    "final_population": 27,
+    "max_population": 272,
+    "min_population": 25,
+    "total_births": 1054,
+    "total_deaths": 1077,
+    "total_predator_kills": 109,
     "total_steps": 200,
-    "avg_population": 57.335,
-    "avg_energy": 44.4619,
-    "growth_rate": 0.0076,
+    "avg_population": 124.155,
+    "avg_energy": 29.9815,
+    "growth_rate": 0.0096,
     "final_growth_rate": 0.0
 }
