@@ -1,95 +1,135 @@
 # Frog Pond Ecosystem Simulation
 
-This repository contains a Python-based simulation of a simplified frog pond ecosystem.
-The simulation models frog population dynamics using stochastic processes, predator-prey interactions, and environmental resource availability. The goal is to observe emergent behavior such as population growth, oscillation, and extinction under probabilistic conditions.
+This project implements a stochastic simulation of a frog pond ecosystem. The system models population dynamics through interactions between frogs, predators, and environmental resources. The simulation is designed to explore emergent behaviors such as population growth, collapse, and stability under varying conditions.
 
 ## Course
-CS 4632: Modeling and Simulation  
+
+CS 4632: Modeling and Simulation
 Kennesaw State University
 
 ## Author
 Mikkel Welch
 
 ## Status
-- Milestone 2 – Initial Implementation  
-- Milestone 3 - In progress
+* Milestone 3 – Complete Implementation & Testing
+
+---
 
 ## Requirements
-Python Version: Python 3.10+  
-Install dependencies:  
-- pip install -r requirements.txt
+
+* Python 3.10+
+* Install dependencies:
+
+```
+pip install -r requirements.txt
+```
+
+---
 
 ## How to Run
-1. Install dependencies:  
-   pip install -r requirements.txt
-   
-2. Run the simulation:  
-   python main.py
 
-The simulation will execute a full run and generate several graphs showing ecosystem behavior over time. 
+Run all simulation experiments:
 
-## Implemented Features
-* Frog lifecycle with energy and aging
-* Probabilistic reproduction model
-* Predator with stochastic attack probability
-* Enviromental food regeneration system
-* Random environmental tempenture variation
-* Automated data collection for simulation metrics
+```
+python run_experiments.py
+```
 
-## Metrics Collected
-The simulation collects the following time-series data:
+This will:
+
+* Execute all configurations in `/configs`
+* Generate outputs in `/runs`
+* Record results in a master index file
+
+---
+
+## Features
+
+* Frog lifecycle with energy, aging, and reproduction
+* Predator-prey interaction model
+* Environmental system with food regeneration and temperature variation
+* Stochastic birth-death processes
+* Parameterized simulation via configuration files
+* Automated multi-run execution system
+
+---
+
+## Data Collection System
+
+The simulation includes a comprehensive data collection system:
+
+### Time-Series Data
+
 * Population over time
-* Births per step
-* Deaths per step
+* Births and deaths per step
 * Predator kills per step
 * Food levels
+* (Optional) Average energy and growth rate
 
-These metrics are used to analyze ecosystem stability and population dynamics
+### Event Data
+
+* Birth events
+* Death events
+* Predator kill events
+  (Recorded in `events.csv`)
+
+### Summary Data
+
+* Maximum and minimum population
+* Total births and deaths
+* Total predator kills
+
+### Run Index
+
+* All runs are tracked in `runs/index.csv`
+* Includes parameters, duration, and final population
+
+---
+
+## Output Structure
+
+```
+runs/
+├── index.csv
+├── run_001/
+│   ├── timeseries.csv
+│   ├── events.csv
+│   ├── summary.json
+│   └── config.json
+```
+
+---
 
 ## Models Implemented
 
 ### 1. Stochastic Birth-Death Model
-Frog reproduction and mortality are governed by probabilistic rules.
-Birth events occur when adult frogs reach sufficient energy during breeding periods, while death events occur due to aging, energy depetion, or stochastic mortality.
 
-This model introduces natural variability into population dynamics and allows the system to produce different outcomes across simulation runs.
+Population changes are governed by probabilistic reproduction and mortality rules, introducing variability and non-deterministic outcomes.
 
 ### 2. Predator-Prey Interaction Model
-A predator agent interacts with the frog population by attempting attcks each simulation step.
-Predation occurs based on a configurable attack probability and currently targets adult frogs.
 
-This mechanism introduces additional mortality pressure and affects long-term population stability. 
+Predators attempt to eliminate adult frogs based on a configurable probability, adding external population pressure.
 
 ### 3. Environmental Resource Model
-The enviroment maintains a dynamic food recourse that frogs consume to gain energy.
-Food regenerates each simulation step and can also fluctuate due to random enviromental events.
 
-Food availabilty directly influences reproduction rates and survival, making it a key factor in ecosystem stability.
+Food availability fluctuates over time and directly impacts survival and reproduction.
 
-## Architecture Overview 
-The simulation is organized using modular components located in the src/ directory.
+---
 
-**src/frog.py**  
-Defines the Frog entity including lifecycle behavior, energy management, reproduction rules, and mortality conditions.
+## Architecture Overview
 
-**src/predator.py**  
-Implements predator behavior and probabilistic attack mechanics.
+* `frog.py` – Frog entity logic
+* `predator.py` – Predator behavior
+* `environment.py` – Environmental dynamics
+* `data_collector.py` – Data tracking system
+* `simulation.py` – Core simulation engine
+* `run_experiments.py` – Batch execution system
 
-**src/enviroment.py**  
-Manages enviromental conditions including food regeneration and temperature variations.
-
-**src/data_collectior.py**  
-Handles automated data collection for simulation metrics such as population size, births, deaths, food levels, predator kills.
-
-**src/simulation.py**  
-Coordinates the simulation data collection for simulation metrics such as population size, births, deaths, food levels, and predator kills.
-
-**main.py**  
-Entry point that runs the simulation and generates visualization graphs using matplotlib.
+---
 
 ## Project Structure
+
 ```
-frog-ecosystem-simulation
+frog-ecosystem-simulation/
 │
 ├── src
 │   ├── data_collector.py
@@ -98,6 +138,8 @@ frog-ecosystem-simulation
 │   ├── predator.py
 │   └── simulation.py
 │
+├── configs/
+├── runs/
 ├── .gitignore
 ├── main.py
 ├── README.md
@@ -105,6 +147,8 @@ frog-ecosystem-simulation
 └── run_experiments.py
 ```
 
+---
+
 ## Repository
-Github Repository:  
+
 https://github.com/MikkelWel/frog-ecosystem-simulation
