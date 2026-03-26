@@ -1,5 +1,3 @@
-from random import random
-
 from src.frog import Frog
 from src.predator import Predator
 from src.environment import Environment
