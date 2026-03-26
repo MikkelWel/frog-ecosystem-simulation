@@ -21,7 +21,7 @@ class Frog:
         #only allow reproduction in "spring"
         if 5 <= (current_time % 40) <= 12:
             if self.energy >= 18:
-                reproduction_chance = 0.3
+                reproduction_chance = 0.1 + 0.01 * (self.energy - 18)
                 if random.random() < reproduction_chance:
                     self.energy -= 6
                     return Frog()
