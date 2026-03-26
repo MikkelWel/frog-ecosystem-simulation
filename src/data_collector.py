@@ -75,14 +75,11 @@ class DataCollection:
         return {
             "max_population": max(self.population_history) if self.population_history else 0,
             "min_population": min(self.population_history) if self.population_history else 0,
-            "avg_population": (
-                sum(self.population_history) / len(self.population_history)
-                if self.population_history else 0
-            ),
             "total_births": sum(self.birth_history),
             "total_deaths": sum(self.death_history),
             "total_predator_kills": sum(self.predator_kill_history),
             "total_steps": len(self.step_history),
+            "avg_population": round(sum(self.population_history) / len(self.population_history) if self.population_history else 0, 4),
             "avg_energy": round(sum(self.avg_energy_history) / len(self.avg_energy_history) if self.avg_energy_history else 0, 4),
             "growth_rate": round(sum(self.growth_rate_history) / len(self.growth_rate_history) if self.growth_rate_history else 0, 4)
         }
