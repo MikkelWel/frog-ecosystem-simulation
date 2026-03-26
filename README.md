@@ -24,7 +24,7 @@ Install dependencies:
    pip install -r requirements.txt
    
 2. Run the simulation:  
-   python main.py
+   python run_experiments.py
 
 The simulation will execute a full run and generate several graphs showing ecosystem behavior over time. 
 

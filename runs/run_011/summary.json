@@ -5,5 +5,7 @@
     "total_births": 23,
     "total_deaths": 163,
     "total_predator_kills": 159,
-    "total_steps": 200
+    "total_steps": 200,
+    "avg_energy": 3.0476,
+    "growth_rate": -0.026
 }
