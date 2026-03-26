@@ -7,6 +7,19 @@ from src.simulation import Simulation
 CONFIG_FOLDER = "configs"
 OUTPUT_BASE = "runs"
 
+def validate_config(config):
+    if config["initial_population"] < 0:
+        raise ValueError("initial_population must be >= 0")
+
+    if not (0 <= config["attack_probability"] <= 1):
+        raise ValueError("attack_probability must be between 0 and 1")
+
+    if config["food_regeneration_rate"] <= 0:
+        raise ValueError("food_regeneration_rate must be > 0")
+
+    if config["steps"] <= 0:
+        raise ValueError("steps must be > 0")
+
 def load_config(config_path):
     with open(config_path) as f:
         return json.load(f)
@@ -65,6 +78,7 @@ def main():
 
         config_path = os.path.join(CONFIG_FOLDER, config_file)
         config = load_config(config_path)
+        validate_config(config)
 
         print(f"Running simulation {config['id']}...")
 

@@ -98,6 +98,8 @@ frog-ecosystem-simulation
 │   ├── predator.py
 │   └── simulation.py
 │
+├── configs/
+├── runs/
 ├── .gitignore
 ├── main.py
 ├── README.md
