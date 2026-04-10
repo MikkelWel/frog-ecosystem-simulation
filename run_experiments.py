@@ -3,9 +3,11 @@ import os
 import time
 import random
 import csv
+from analyze_results import analyze_results
 from src.simulation import Simulation
 from src.event_logger import EventLogger
 from generate_summary_csv import generate_summary
+from plot_results import generate_plots
 
 CONFIG_FOLDER = "configs"
 OUTPUT_FOLDER = "runs"
@@ -19,8 +21,8 @@ def validate_config(config):
     if not (0 <= config["attack_probability"] <= 1):
         raise ValueError("attack_probability must be between 0 and 1")
 
-    if config["food_regeneration_rate"] <= 0:
-        raise ValueError("food_regeneration_rate must be > 0")
+    if config["food_regeneration_rate"] < 0:
+        raise ValueError("food_regeneration_rate must be >= 0")
 
     if config["steps"] <= 0:
         raise ValueError("steps must be > 0")
@@ -43,75 +45,80 @@ def save_outputs(sim, run_folder, config):
 def main():
     index_file = os.path.join(OUTPUT_FOLDER, "index.csv")
     file_exists = os.path.isfile(index_file)
+    config_count = 0
 
-    for config_file in sorted(os.listdir(CONFIG_FOLDER)):
-        if not config_file.endswith(".json"):
-            continue
+    for root, _, files in os.walk(CONFIG_FOLDER):
+        for config_file in sorted(files):
+            if not config_file.endswith(".json"):
+                continue
 
-        config_path = os.path.join(CONFIG_FOLDER, config_file)
-        config = load_config(config_path)
+            config_path = os.path.join(root, config_file)
+            config = load_config(config_path)
 
-        validate_config(config)
+            validate_config(config)
+            config_count += 1
 
-        print(f"Running simulation {config['id']}...")
+            print(f"Running simulation {config_file} -> ID: {config['id']}")
 
-        random.seed(config.get("seed", None))
+            random.seed(config.get("seed", None))
 
-        sim = Simulation(
-            initial_population=config["initial_population"],
-            attack_probability=config["attack_probability"],
-            food_regeneration_rate=config["food_regeneration_rate"]
-        )
+            sim = Simulation(
+                initial_population=config["initial_population"],
+                attack_probability=config["attack_probability"],
+                food_regeneration_rate=config["food_regeneration_rate"]
+            )
 
-        run_folder = os.path.join(OUTPUT_FOLDER, f"run_{config['id']}")
-        os.makedirs(run_folder, exist_ok=True)
+            run_folder = os.path.join(OUTPUT_FOLDER, f"run_{config['id']}")
+            os.makedirs(run_folder, exist_ok=True)
 
-        event_logger = EventLogger(os.path.join(run_folder, "events.csv"))
+            event_logger = EventLogger(os.path.join(run_folder, "events.csv"))
 
-        start = time.time()
-        sim.run(steps=config["steps"], event_logger=event_logger)
-        duration = time.time() - start
+            start = time.time()
+            sim.run(steps=config["steps"], event_logger=event_logger)
+            duration = time.time() - start
 
-        event_logger.close()
+            event_logger.close()
 
-        save_outputs(sim, run_folder, config)
+            save_outputs(sim, run_folder, config)
 
-        final_population = (
-            sim.data.population_history[-1]
-            if sim.data.population_history else 0
-        )
+            final_population = (
+                sim.data.population_history[-1]
+                if sim.data.population_history else 0
+            )
 
-        with open(index_file, "a", newline="") as f:
-            writer = csv.writer(f)
+            with open(index_file, "a", newline="") as f:
+                writer = csv.writer(f)
 
-            if not file_exists:
+                if not file_exists:
+                    writer.writerow([
+                        "run_id",
+                        "seed",
+                        "initial_population",
+                        "attack_probability",
+                        "food_regeneration_rate",
+                        "steps",
+                        "duration_seconds",
+                        "final_population"
+                    ])
+                    file_exists = True
+
                 writer.writerow([
-                    "run_id",
-                    "seed",
-                    "initial_population",
-                    "attack_probability",
-                    "food_regeneration_rate",
-                    "steps",
-                    "duration_seconds",
-                    "final_population"
+                    config["id"],
+                    config.get("seed", None),
+                    config["initial_population"],
+                    config["attack_probability"],
+                    config["food_regeneration_rate"],
+                    config["steps"],
+                    round(duration, 4),
+                    final_population
                 ])
-                file_exists = True
 
-            writer.writerow([
-                config["id"],
-                config.get("seed", None),
-                config["initial_population"],
-                config["attack_probability"],
-                config["food_regeneration_rate"],
-                config["steps"],
-                round(duration, 4),
-                final_population
-            ])
+            print(f"Run {config['id']} complete in {round(duration, 4)}s -> {run_folder}")
 
-        print(f"Run {config['id']} complete in {round(duration,4)}s → {run_folder}")
-
-
+    print(f"Processed {config_count} config files.")
 
 if __name__ == "__main__":
     main()
     generate_summary()
+    analyze_results()
+    generate_plots()

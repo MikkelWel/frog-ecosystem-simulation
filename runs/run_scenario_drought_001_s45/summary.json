@@ -1,0 +1,13 @@
+{
+    "final_population": 6,
+    "max_population": 75,
+    "min_population": 3,
+    "total_births": 159,
+    "total_deaths": 203,
+    "total_predator_kills": 70,
+    "total_steps": 200,
+    "avg_population": 23.14,
+    "avg_energy": 28.8366,
+    "growth_rate": 0.0013,
+    "final_growth_rate": 0.0
+}

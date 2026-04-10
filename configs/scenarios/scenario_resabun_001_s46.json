@@ -1,0 +1,8 @@
+{
+  "id": "scenario_resabun_001_s46",
+  "initial_population": 50,
+  "attack_probability": 0.005,
+  "food_regeneration_rate": 30,
+  "steps": 200,
+  "seed": 46
+}

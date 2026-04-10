@@ -1,8 +1,0 @@
-{
-    "id": "011",
-    "initial_population": 140,
-    "attack_probability": 0.025,
-    "food_regeneration_rate": 15,
-    "steps": 200,
-    "seed": 52
-}

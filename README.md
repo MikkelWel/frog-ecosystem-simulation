@@ -11,7 +11,7 @@ Kennesaw State University
 Mikkel Welch
 
 ## Status
-* Milestone 3 – Complete Implementation & Testing
+* Milestone 4 – Analysis & Validation
 
 ---
 
@@ -39,6 +39,11 @@ This will:
 * Execute all configurations in `/configs`
 * Generate outputs in `/runs`
 * Record results in a master index file
+
+The pipeline also generates:
+- summary_table.csv (aggregated run metrics)
+- statistical_summary.csv (mean, standard deviation, confidence intervals)
+- plots/ (visualizations for sensitivity and scenario analysis)
 
 ---
 
@@ -92,12 +97,23 @@ runs/
 ├── index.csv
 ├── summary_table.csv
 ├── summary_table.png
-├── run_001/
+├── plots/
+├── run_<config_id>/
 │   ├── timeseries.csv
 │   ├── events.csv
 │   ├── summary.json
 │   └── config.json
 ```
+
+---
+## Analysis Capabilities
+
+The project supports:
+
+- Sensitivity analysis across key parameters (attack probability, food regeneration, initial population)
+- Scenario testing under different environmental conditions (balanced, drought, predator-dominated, resource abundance)
+- Statistical analysis including mean, standard deviation, and 95% confidence intervals
+- Automated visualization of results for comparison and interpretation
 
 ---
 
@@ -144,12 +160,22 @@ frog-ecosystem-simulation/
 ├── configs/
 ├── runs/
 ├── .gitignore
+├── analyze_results.py
 ├── generate_summary_csv.py
 ├── main.py
+├── plot_results.py
 ├── README.md
 ├── requirements.txt
 └── run_experiments.py
 ```
+
+---
+
+## Key Findings
+
+- Predator attack probability has the strongest influence on population outcomes
+- Food availability exhibits nonlinear effects, including boom–bust dynamics
+- Initial population has limited long-term impact compared to environmental factors
 
 ---
 

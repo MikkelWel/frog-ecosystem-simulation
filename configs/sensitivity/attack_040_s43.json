@@ -1,0 +1,8 @@
+{
+  "id": "attack_040_s43",
+  "initial_population": 50,
+  "attack_probability": 0.04,
+  "food_regeneration_rate": 15,
+  "steps": 200,
+  "seed": 43
+}
