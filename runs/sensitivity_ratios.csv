@@ -1,0 +1,10 @@
+Parameter,From Group,To Group,Input Old,Input New,Output Old Mean Final Pop,Output New Mean Final Pop,% Change Input,% Change Output,Sensitivity Ratio
+Predator Attack Probability,attack_005,attack_010,0.005,0.01,45.6667,36.1667,100.0,-20.8029,-0.208
+Predator Attack Probability,attack_010,attack_020,0.01,0.02,36.1667,25.8667,100.0,-28.4792,-0.2848
+Predator Attack Probability,attack_020,attack_040,0.02,0.04,25.8667,19.0667,100.0,-26.2886,-0.2629
+Food Regeneration Rate,food_005,food_010,5,10,11.8,17.9,100.0,51.6949,0.5169
+Food Regeneration Rate,food_010,food_015,10,15,17.9,36.1667,50.0,102.0486,2.041
+Food Regeneration Rate,food_015,food_025,15,25,36.1667,50.0667,66.6667,38.4331,0.5765
+Initial Population,pop_020,pop_050,20,50,29.2333,36.1667,150.0,23.7175,0.1581
+Initial Population,pop_050,pop_100,50,100,36.1667,27.8667,100.0,-22.9493,-0.2295
+Initial Population,pop_100,pop_150,100,150,27.8667,32.3,50.0,15.909,0.3182

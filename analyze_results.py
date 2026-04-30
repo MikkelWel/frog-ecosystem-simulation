@@ -1,13 +1,31 @@
 import csv
 import math
-from collections import defaultdict
+import os
+
 
 def compute_stats(values):
     n = len(values)
+
+    if n == 0:
+        return {
+            "n": 0,
+            "mean": 0,
+            "std": 0,
+            "min": 0,
+            "max": 0,
+            "ci_low": 0,
+            "ci_high": 0
+        }
+
     mean = sum(values) / n
-    variance = sum((x - mean) ** 2 for x in values) / n
+
+    if n > 1:
+        variance = sum((x - mean) ** 2 for x in values) / (n - 1)
+    else:
+        variance = 0
+
     std = math.sqrt(variance)
-    ci = 1.96 * (std / math.sqrt(n)) if n > 0 else 0
+    ci = 1.96 * (std / math.sqrt(n)) if n > 1 else 0
 
     return {
         "n": n,
@@ -19,9 +37,44 @@ def compute_stats(values):
         "ci_high": mean + ci
     }
 
+
+def get_group_name(run_id):
+    if run_id.startswith("scenario"):
+        parts = run_id.split("_")
+
+        if len(parts) >= 2:
+            return parts[0] + "_" + parts[1]
+        
+    if "_s" in run_id:
+        return run_id.split("_s")[0]
+
+    return run_id
+
+
+def add_value(groups, group_name, metric_name, value):
+    if group_name not in groups:
+        groups[group_name] = {
+            "Final Pop": [],
+            "Max Pop": [],
+            "Avg Pop": [],
+            "Total Births": [],
+            "Total Deaths": [],
+            "Total Predator Kills": [],
+            "Avg Energy": [],
+            "Growth Rate": [],
+            "Final Growth Rate": []
+        }
+
+    groups[group_name][metric_name].append(value)
+
+
 def analyze_results():
     input_file = "runs/summary_table.csv"
     output_file = "runs/statistical_summary.csv"
+
+    if not os.path.exists(input_file):
+        print(f"Error: {input_file} not found.")
+        return
 
     groups = {}
 
@@ -30,32 +83,23 @@ def analyze_results():
 
         for row in reader:
             run_id = row["Run ID"].strip()
+            group_name = get_group_name(run_id)
 
-            if run_id.startswith("scenario"):
-                parts = run_id.split("_")
-                key = parts[0] + "_" + parts[1]
-            else:
-                key = run_id.split("_s")[0]
-
-            if key not in groups:
-                groups[key] = {
-                    "Final Pop": [],
-                    "Max Pop": [],
-                    "Avg Pop": [],
-                    "Total Deaths": [],
-                    "Growth Rate": []
-                }
-
-            groups[key]["Final Pop"].append(float(row["Final Pop"]))
-            groups[key]["Max Pop"].append(float(row["Max Pop"]))
-            groups[key]["Avg Pop"].append(float(row["Avg Pop"]))
-            groups[key]["Total Deaths"].append(float(row["Total Deaths"]))
-            groups[key]["Growth Rate"].append(float(row["Growth Rate"]))
+            add_value(groups, group_name, "Final Pop", float(row["Final Pop"]))
+            add_value(groups, group_name, "Max Pop", float(row["Max Pop"]))
+            add_value(groups, group_name, "Avg Pop", float(row["Avg Pop"]))
+            add_value(groups, group_name, "Total Births", float(row["Total Births"]))
+            add_value(groups, group_name, "Total Deaths", float(row["Total Deaths"]))
+            add_value(groups, group_name, "Total Predator Kills", float(row["Total Predator Kills"]))
+            add_value(groups, group_name, "Avg Energy", float(row["Avg Energy"]))
+            add_value(groups, group_name, "Growth Rate", float(row["Growth Rate"]))
+            add_value(groups, group_name, "Final Growth Rate", float(row["Final Growth Rate"]))
 
     print("\n=== STATISTICAL SUMMARY ===\n")
 
     with open(output_file, "w", newline="") as f:
         writer = csv.writer(f)
+
         writer.writerow([
             "Group",
             "Metric",
@@ -74,7 +118,13 @@ def analyze_results():
             for metric_name, values in groups[group_name].items():
                 stats = compute_stats(values)
 
-                print(f"  {metric_name}: mean={stats['mean']:.2f}, std={stats['std']:.2f}")
+                print(
+                    f"  {metric_name}: "
+                    f"n={stats['n']}, "
+                    f"mean={stats['mean']:.4f}, "
+                    f"std={stats['std']:.4f}, "
+                    f"95% CI=[{stats['ci_low']:.4f}, {stats['ci_high']:.4f}]"
+                )
 
                 writer.writerow([
                     group_name,
@@ -91,6 +141,7 @@ def analyze_results():
             print()
 
     print(f"Statistical summary saved to {output_file}")
+
 
 if __name__ == "__main__":
     analyze_results()

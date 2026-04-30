@@ -1,8 +1,8 @@
 {
-  "id": "attack_005_s42",
-  "initial_population": 50,
-  "attack_probability": 0.005,
-  "food_regeneration_rate": 15,
-  "steps": 200,
-  "seed": 42
+    "id": "attack_005_s42",
+    "initial_population": 50,
+    "attack_probability": 0.005,
+    "food_regeneration_rate": 15,
+    "steps": 200,
+    "seed": 42
 }

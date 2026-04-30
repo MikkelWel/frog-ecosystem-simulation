@@ -1,0 +1,8 @@
+{
+    "id": "food_005_s62",
+    "initial_population": 50,
+    "attack_probability": 0.01,
+    "food_regeneration_rate": 5,
+    "steps": 200,
+    "seed": 62
+}

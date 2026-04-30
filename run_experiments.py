@@ -8,6 +8,7 @@ from src.simulation import Simulation
 from src.event_logger import EventLogger
 from generate_summary_csv import generate_summary
 from plot_results import generate_plots
+from calculate_sensitivity import main as calculate_sensitivity
 
 CONFIG_FOLDER = "configs"
 OUTPUT_FOLDER = "runs"
@@ -121,4 +122,5 @@ if __name__ == "__main__":
     main()
     generate_summary()
     analyze_results()
+    calculate_sensitivity()
     generate_plots()
