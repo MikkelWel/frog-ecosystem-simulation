@@ -11,7 +11,7 @@ Kennesaw State University
 Mikkel Welch
 
 ## Status
-* Milestone 4 – Analysis & Validation
+* Milestone 5 – Final Report & Presentation
 
 ---
 
@@ -161,6 +161,8 @@ frog-ecosystem-simulation/
 ├── runs/
 ├── .gitignore
 ├── analyze_results.py
+├── calculate_sensitivity.py
+├── generate_configs.py
 ├── generate_summary_csv.py
 ├── main.py
 ├── plot_results.py
@@ -173,9 +175,9 @@ frog-ecosystem-simulation/
 
 ## Key Findings
 
-- Predator attack probability has the strongest influence on population outcomes
-- Food availability exhibits nonlinear effects, including boom–bust dynamics
-- Initial population has limited long-term impact compared to environmental factors
+- Food regeneration showed the highest computed sensitivity, especially from 10 to 15.
+- Predator attack probability consistently reduced final population as predator pressure increased.
+- Initial population had weaker and less consistent long-term influence compared to environmental factors.
 
 ---
 
