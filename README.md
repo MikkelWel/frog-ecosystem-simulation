@@ -1,4 +1,4 @@
-# Frog Pond Ecosystem Simulation
+# Frog Pond Ecosystem Simulation final-submission
 
 This project implements a stochastic simulation of a frog pond ecosystem. The system models population dynamics through interactions between frogs, predators, and environmental resources. The simulation is designed to explore emergent behaviors such as population growth, collapse, and stability under varying conditions.
 
